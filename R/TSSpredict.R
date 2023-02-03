@@ -7,7 +7,7 @@
 #' @param tss_filtering_distance An integer specifying the threshold distance
 #' for TSS candidates that should be considered from the same genuine TSS.
 #' This should be set to the read length of the sequence technology.
-#' Defults to 150.
+#' Defaults to 150.
 #' @param reads_percentage A percentage specifying the minim percentage of
 #' reads on a gene should be assigned to a qualified TSS candidates.
 #' Defaults to 0.05.
@@ -35,7 +35,7 @@
 #' @return \code{TSSprediction} outputs a matrix of read counts for the
 #' predicted TSS by cell. This matrix is stored in data.table format.
 #' @export TSSpredict
-#' @import data.table
+#' @importFrom data.table  .SD := data.table rbindlist set setDT
 #' @import parallel
 #' @import GenomicAlignments
 #' @import GenomicRanges

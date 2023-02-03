@@ -1,4 +1,4 @@
-#' TSS merging for TSS count matrices of multiple samples
+#' Convert TSS count to TSS usage
 #'
 #' @param tss_count_matrix A TSS count matrix.
 #' @param num_cell An integer specifying the threshold used to filter out
@@ -9,7 +9,7 @@
 #' @return \code{CountToUsage} outputs a matrix of usage for the
 #' merged TSS by cell. This matrix is stored in data.table format.
 #' @export CountToUsage
-#' @import data.table
+#' @importFrom data.table .SD := data.table rbindlist set setDT
 #' @import parallel
 #'
 #' @author Shiwei Fu, \email{shiwei.fu@email.ucr.edu}

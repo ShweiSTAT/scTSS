@@ -2,7 +2,7 @@
 % Please edit documentation in R/CountToUsage.R
 \name{CountToUsage}
 \alias{CountToUsage}
-\title{TSS merging for TSS count matrices of multiple samples}
+\title{Convert TSS count to TSS usage}
 \usage{
 CountToUsage(tss_count_matrix, num_cell = 30)
 }
@@ -19,7 +19,7 @@ Defaults to 30.}
 merged TSS by cell. This matrix is stored in data.table format.
 }
 \description{
-TSS merging for TSS count matrices of multiple samples
+Convert TSS count to TSS usage
 }
 \author{
 Shiwei Fu, \email{shiwei.fu@email.ucr.edu}

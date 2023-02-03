@@ -30,7 +30,7 @@ annotated 5' of a gene. Defaults to 500.}
 \item{tss_filtering_distance}{An integer specifying the threshold distance
 for TSS candidates that should be considered from the same genuine TSS.
 This should be set to the read length of the sequence technology.
-Defults to 150.}
+Defaults to 150.}
 
 \item{reads_percentage}{A percentage specifying the minim percentage of
 reads on a gene should be assigned to a qualified TSS candidates.

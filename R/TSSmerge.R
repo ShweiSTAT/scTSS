@@ -10,7 +10,7 @@
 #' @return \code{TSSmerge} outputs a matrix of read counts for the
 #' predicted TSS by cell. This matrix is stored in data.table format.
 #' @export TSSmerge
-#' @import data.table
+#' @importFrom  data.table .SD := data.table rbindlist set setDT
 #' @import parallel
 #'
 #' @author Shiwei Fu, \email{shiwei.fu@email.ucr.edu}

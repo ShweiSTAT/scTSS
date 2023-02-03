@@ -17,7 +17,7 @@
 #' @return \code{TSSduTest} outputs the DU test results and the
 #' design matrix used for DU test.
 #' @export TSSduTest
-#' @import data.table
+#' @importFrom  data.table .SD := data.table rbindlist set setDT
 #' @import parallel
 #' @importFrom  stats aggregate median model.matrix
 #' @importFrom  transport wasserstein1d
