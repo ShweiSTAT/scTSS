@@ -86,9 +86,10 @@ TSSpredict(read_assignmnet_dist = 200,
            barcodes_path = barcodes)
 ```
 
-The above lines should generate you a TSS count matrix with rows being the TSS predicted on the genes specified by you through `gene_of_interest` and columns being the cells in your input barcode.
+The above lines should generate you a TSS count matrix with rows being the TSS predicted on the genes specified by you through `gene_of_interest` and columns being the cells in your input barcode. As for the predicted TSS, it should follow this name format: [chromosome]:[gene]:[location]:[strand] (e.g. chr21:ENSG00000142166:33335591:+).
+
                            
-## Differential Usage (DU) Test
+## Differential usage (DU) test
 
 The `TSSpredict` is done sample by sample, after we obtained the TSS count matrix for each sample, we can conduct DU TSS analysis. In the following example, we prepared the TSS count matrix for you. The TSS count matrix are obtained from 5 samples, which leads to 5 TSS count matrices by `TSSpredict`. We are interested in studying the DU TSS for two cell types, thus we subset the 5 TSS count matrices and obtained 10 matrices with each matrix corresponding to one cell type of one sample.
 
@@ -113,7 +114,9 @@ mergedTSS_matrices <- TSSmerge(tss_matrices = subTSS_matrices,
 ```
 
 
-After TSS merging, we need to convert the TSS count to TSS usage to perform DU TSS test. TSS usage is defined as the percentage of reads mapped to this TSS compared to the whole gene that this TSS is on. This can be achieved by function `CountToUsage`. 
+After TSS merging, we should have TSS regions instead of TSS locations as the rows in the TSS count matrix. The name for TSS regions follows this format: As for the predicted TSS, it should follow this name format: [chromosome]:[gene]:[start location]:[end location]:[strand] (e.g. chr10:ENSG00000077150:102394303:102394331:+). 
+
+Afterwards, we need to convert the TSS count to TSS usage to perform DU TSS test. TSS usage is defined as the percentage of reads mapped to this TSS compared to the whole gene that this TSS is on. This can be achieved by function `CountToUsage`. 
 
 This functions takes in one TSS count matrix at a time. and requires two input.
   + The TSS count matrix to be converted 
