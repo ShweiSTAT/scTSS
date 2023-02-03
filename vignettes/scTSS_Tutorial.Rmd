@@ -13,7 +13,146 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+## Overview of scTSS
 
-```{r setup}
+scTSS is a package that can leverage the 5' single-cell RNA-seq data to study the transcription start site (TSS) at single-cell resolution. scTSS comprises of two main satges, TSS prediction and differential usage test for TSSs across multiple conditions.
+
+To download scTSS form github and load package, please follow:
+
+```{r eval=FALSE}
+devtools::install_github("ShiweiweiLikeWasabi/scTSS")
 library(scTSS)
 ```
+
+## Preprocessing
+Before running the `scTSS` package, we should obtain a **.bam** file and conduct the peak calling methods based on the **.bam** file. We recommend using Homer findPeaks. Please refer to this link for detail. After the peak calling method, we should obtain a **.txt** file that contains the information for peaks related to the transcription start site. scTSS can process these peaks and return the predicted TSS. Please see below on the `TSSpredict` section for more details of how to prepare the file.
+ 
+## TSS prediction 
+
+`TSSpredict` requires five input files:
+
+  + The **.bam** file of the 5' single-cell RNA-seq data, which should be sorted and indexed. The companion .bai file should also be stored under the same directory as the .bam file.
+  + The **.gtf** file of the reference genome.
+  + The **.txt** file separated by `\t`, storing peak calling results from Homer findPeaks or other peak calling tools. If the file is from Homer, please remove the lines commented by `#`, except for the header line. For the header line, please just remove the `#` itself and retain other header information. If the file is from other peak calling tools, please make sure the file containing the following columns.
+    - PeakID: a distinct ID for the peaks
+    - chr: the chromosome where the peaks located
+    - start: the start location (on genome) of the peak
+    - end: the end location (on genome) of the peak
+  + The **.csv** file storing the barcode information. This file should contain three columns with no header.
+    - the first column is required, and should be barcode for the cells 
+    - the second and third column should be the meta data for the cells. They are optional and can be any information you want, such as cell types and conditions. These two columns are not needed for TSS prediction, but it is for your later convince. `TSSpredict` can out put a TSS count matrix with the same barcode order as your input barcode. You can subset the TSS count matrix easily for downstream analysis if you have the meta columns filled.
+  + The **.rds** file store the gene names for genes with only one annotated TSS. These genes are used for the TSS learning step, and is only required if your input data is single-ended. You can download the prepare file for GRCh38 human genome from our link. If you want to prepare your own file, make sure the gene names match your annotation and stored as characters in a vector.
+  
+`TSSpredict` also requires the following nine parameters:
+  
+  + `read_assignmnet_dist` controls counting reads for each predicted TSS. It an integer specifying a distance on genome. If a read falls closely to a predicted TSS within this distance, we will assign this read onto this predicted TSS. 
+  + `gene_extension` is the extension before the annotated TSS. This is because the annotation of TSS are not 100\% correct. This parameter allows `TSSpredict` to account for TSS candidates before the annotated TSS. The default is 500(bp), which is recommended for paired-end data. If you use single-end data, we recommend setting this variable as 200.
+  + `tss_filtering_distance` controls the distance between the any two predicted TSSs. This distance is used for considering splicing events and ignores the annotated intron regions. If you do not know how to set this paramter, simply set it the same as the read length of your sample. 
+  + `reads_percentage` and `read_number` controls removing TSS candidates due to background noise. `reads_percentage` specifies the minimum percentage of reads on a gene that a qualified predicted TSS should have. `read_number` specifies the total number of reads that a qualified predicted TSS across all the cells.
+  + `gene_of_interest` specifies the genes that you are interested in predicting TSS. If you want to predicting TSS for all gene, just use the defult. If you are only interested in specific genes just, please input a vectors of characters containing the gene names corresping to your annotation file.
+  + `if_paired` specifies if your data is paired-end or single-end.
+  + `ncore` specifies the number of cores used for your computation.
+
+An example code for `TSSpredict` is shown below:
+```{r eval=FALSE}
+bam <- "./sorted_sample_COVID_135_9000000-35000000.bam"
+gtf <- "./genes.gtf"
+tss <- "./example_peak.txt"
+barcodes <- "./example_barcode.csv"
+oneTSSgene <- "./oneTSSgene_test.rds"
+genes <- c("ENSG00000141956","ENSG00000141959",
+           "ENSG00000142149","ENSG00000142156",
+           "ENSG00000142166","ENSG00000142168",
+           "ENSG00000142173","ENSG00000142178",
+           "ENSG00000142182","ENSG00000142185",
+           "ENSG00000142188","ENSG00000142192",
+           "ENSG00000142197","ENSG00000142207",
+           "ENSG00000154639","ENSG00000154640",
+           "ENSG00000154642","ENSG00000154645",
+           "ENSG00000154646","ENSG00000154654")
+
+TSSpredict(read_assignmnet_dist = 200,
+           gene_extension = 500,
+           tss_filtering_distance = 150,
+           reads_percentage = 0.05,
+           read_number = 50,
+           gene_of_interest = genes,
+           if_paired = TRUE,
+           ncore = 2,
+           oneTSSgene_path = oneTSSgene,
+           bam_path = bam,
+           anno_path = gtf,
+           tss_path = tss,
+           barcodes_path = barcodes)
+```
+
+The above lines should generate you a TSS count matrix with rows being the TSS predicted on the genes specified by you through `gene_of_interest` and columns being the cells in your input barcode.
+                           
+## Differential Usage (DU) Test
+
+The `TSSpredict` is done sample by sample, after we obtained the TSS count matrix for each sample, we can conduct DU TSS analysis. In the following example, we prepared the TSS count matrix for you. The TSS count matrix are obtained from 5 samples, which leads to 5 TSS count matrices by `TSSpredict`. We are interested in studying the DU TSS for two cell types, thus we subset the 5 TSS count matrices and obtained 10 matrices with each matrix corresponding to one cell type of one sample.
+
+```{r eval=FALSE}
+## read in the subset TSS count matrices
+subTSS_matrices <- readRDS("./unmerged_TSS_matrices_covid_test_sampled.rds")
+```
+
+Due to technical variations between each sample, the predicted TSS originated from the same genuine TSS might not be exactly the same across samples. Before perform DU TSS test, we need to perform TSS merging to group closely located TSS together and form a unified TSS regions across samples. This can be achieved by `TSSmerge` included in scTSS package. 
+
+`TSSmerge` requires three input.
+
+  + `tss_matrices` a list of TSS count matrices obtained from `TSSpredict`.
+  + `tss_filtering_distance` to specify the distance we use to group predictd TSS into TSS regions across samples.
+  + `ncore` is the number of cores used for TSS merging.
+
+The example code is as below:
+```{r eval=FALSE}
+mergedTSS_matrices <- TSSmerge(tss_matrices = subTSS_matrices,
+                               tss_filtering_distance = 150,
+                               ncore = 2)
+```
+
+
+After TSS merging, we need to convert the TSS count to TSS usage to perform DU TSS test. TSS usage is defined as the percentage of reads mapped to this TSS compared to the whole gene that this TSS is on. This can be achieved by function `CountToUsage`. 
+
+This functions takes in one TSS count matrix at a time. and requires two input.
+  + The TSS count matrix to be converted 
+  + The minimum number of cells that a TSS should be expressed in. This is a quality control step for the downstream DU test. If a TSS is expressed in two little cells, it should be removed before we put it through the DU TSS test algorithm.
+
+```{r eval=FALSE}
+TSS_usage_matrices <- list()
+  for( i in 1:length(mergedTSS_matrices)){
+    TSS_usage_matrices[[names(mergedTSS_matrices)[i]]] <-
+      CountToUsage(tss_count_matrix = mergedTSS_matrices[[i]],
+                   num_cell=20)
+  }
+```
+
+Meanwhile, to facilitate the DU TSS test, `CountToUsage` will also remove the genes that have only one predicted TSS regions, since there is no meaning to study the differential usage when there is only one TSS.
+
+After we obtained the TSS usage matrices for each cell type from each sample, we can perform DU TSS test. This can be done by function `TSSduTest`.
+
+This function takes in these parameters:
+  + `DU_input` should be TSS usage matrices obtained above.
+  + `sample_label` specifies the conditions or cell types for your input TSS usage matrices. This input should be a vector of characters, and the order of the sample labels should correspond to your input matrices.
+  + `permutation_times` specifies the permutation times used to calculate *p*-value. If the number of cells in the TSS usage matrices are too large to the extent to make the function slow, we recommend set this number smaller.
+  + `join_type` specifies how we unify the TSS regions in the input TSS usage matrices. A TSS regions is not necessarily expressed in every sample, if we set the `join_type` to inner, we only consider TSS regions that expressed in all of the matrices, which is a conservative choice. If we set the `join_type` to outter, which means we will also consider TSS regions that expressed in as little as one matrix. This choice is more sensitive in finding DU TSSs.
+  + `ncore`.
+  
+The example code for `TSSduTest` is as below:
+
+```{r eval=FALSE}
+du_rst <- TSSduTest(DU_input = TSS_usage_matrices,
+                    sample_label = c(rep("B",5), rep("NK",5)),
+                    permutation_times = 5000,
+                    join_type = "inner",
+                    ncore = 1)
+```
+
+The `TSSduTest` outputs two contents. One is a table for the DU test containing the testing *p*-values. The other one is the design matrix used for DU TSS test.
+
+
+
+
+
+
