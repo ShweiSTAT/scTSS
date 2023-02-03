@@ -119,6 +119,7 @@ After TSS merging, we should have TSS regions instead of TSS locations as the ro
 Afterwards, we need to convert the TSS count to TSS usage to perform DU TSS test. TSS usage is defined as the percentage of reads mapped to this TSS compared to the whole gene that this TSS is on. This can be achieved by function `CountToUsage`. 
 
 This functions takes in one TSS count matrix at a time. and requires two input.
+
   + The TSS count matrix to be converted 
   + The minimum number of cells that a TSS should be expressed in. This is a quality control step for the downstream DU test. If a TSS is expressed in two little cells, it should be removed before we put it through the DU TSS test algorithm.
 
@@ -136,6 +137,7 @@ Meanwhile, to facilitate the DU TSS test, `CountToUsage` will also remove the ge
 After we obtained the TSS usage matrices for each cell type from each sample, we can perform DU TSS test. This can be done by function `TSSduTest`.
 
 This function takes in these parameters:
+
   + `DU_input` should be TSS usage matrices obtained above.
   + `sample_label` specifies the conditions or cell types for your input TSS usage matrices. This input should be a vector of characters, and the order of the sample labels should correspond to your input matrices.
   + `permutation_times` specifies the permutation times used to calculate *p*-value. If the number of cells in the TSS usage matrices are too large to the extent to make the function slow, we recommend set this number smaller.
