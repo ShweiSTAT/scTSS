@@ -20,9 +20,6 @@
 #' that is in the provided annotation.
 #' @param if_paired FALSE/TRUE, specifying if we have paired-end data (TRUE)
 #' or single-end data (FALSE). Default set to TRUE.
-#' @param oneTSSgene_path The path to a list of gene that are used in the
-#' learning step for single-end data. This only need to be specified if the
-#' data is single-end. Defaults to NULL.
 #' @param ncore An integer specifying the number of cores used. Defaults to 1.
 #' @param bam_path The path to the .bam, which should be stored under the same
 #' directory as its .bai file.
@@ -55,7 +52,6 @@ TSSpredict <- function(read_assignmnet_dist = 200,
                            read_number = 50,
                            gene_of_interest = NULL,
                            if_paired = TRUE,
-                           oneTSSgene_path=NULL,
                            ncore = 1,
                            bam_path,
                            anno_path,
@@ -84,14 +80,13 @@ TSSpredict <- function(read_assignmnet_dist = 200,
   barcodes <- read.csv(barcodes_path,header = F)[,1]
   # loading one-TSS gene
   if(!if_paired){
-    if(!is.null(oneTSSgene_path)){
-    oneTSSgene <- readRDS(oneTSSgene_path)
-    }else{
-      stop("ERROR: This is a single-end dataset. Please provide value for oneTSSgene_path.")
-    }
+    print("This is a single-end data. We are extracting the one-TSS genes for TSS learning...")
+    oneTSSgene <- getOneTSSgenes(tx_list_by_gene = tx_list_by_gene,
+                                 ncore = ncore)
   }
 
   if(if_paired){
+    print("This is a paired-end data. We are predicting TSS and counting reads...")
   tss_outs <- mclapply(1:length(all_genes),function(iii){
     tryCatch({
       region <- gene_list[all_genes[iii]]
@@ -117,21 +112,21 @@ TSSpredict <- function(read_assignmnet_dist = 200,
                                    tx = tx,
                                    xn = xn,
                                    temp_result = temp_result,
-                                 read_assignmnet_dist = read_assignmnet_dist,
-                                 tss_filtering_distance = tss_filtering_distance,
-                                 gene_extension = gene_extension,
-                                 reads_percentage = reads_percentage,
-                                 read_number = read_number,
-                                 distance_adjust = NULL,
-                                 if_paired = if_paired,
-                                 bam_path = bam_path,
-                                 barcodes = barcodes)
+                                   read_assignmnet_dist = read_assignmnet_dist,
+                                   tss_filtering_distance = tss_filtering_distance,
+                                   gene_extension = gene_extension,
+                                   reads_percentage = reads_percentage,
+                                   read_number = read_number,
+                                   distance_adjust = NULL,
+                                   if_paired = if_paired,
+                                   bam_path = bam_path,
+                                   barcodes = barcodes)
       if (iii%%500 == 0){
         gc()
       }
       return(outs)
     },
-    error=function(e){cat("Gene: ",all_genes[iii]," ERROR :",conditionMessage(e), "\n")})
+    error=function(e){cat("Gene: ",all_genes[iii]," excluded", "\n")})
   },mc.cores = ncore)
   tss_outs <- tss_outs[lengths(tss_outs) >0]
   tss_outs <- rbindlist(tss_outs,use.names=T)
@@ -139,6 +134,7 @@ TSSpredict <- function(read_assignmnet_dist = 200,
 
   }else{
     ## 1) The learning step
+    print("We are learning the adjstment distance for your input single-end data...")
     tss_learnt <- mclapply(1:length(oneTSSgene),function(iii){
       tryCatch({
         region <- gene_list[oneTSSgene[iii]]
@@ -172,18 +168,19 @@ TSSpredict <- function(read_assignmnet_dist = 200,
         }
         return(outs)
       },
-      error=function(e){cat("Gene: ",oneTSSgene[iii]," ERROR in the learning step for single-end samples:",conditionMessage(e), "\n")})
+      error=function(e){cat("Gene: ",oneTSSgene[iii]," is not used in the learning step", "\n")})
     },mc.cores = ncore)
     tss_learnt <- tss_learnt[lengths(tss_learnt)>0]
     tss_learnt <- unlist(tss_learnt)
     tss_learnt <- tss_learnt[which(tss_learnt>0 & abs(tss_learnt)<600)]
     tss_learnt <- ceiling(median(tss_learnt))
-    print(paste0("The learnt adjusted distance for sample ",
+    print(paste0("The learnt adjstment distance for sample ",
                  bam_path," is ",
                  tss_learnt, "bp."))
 
 
     ## 2) The predicting step
+    print("We are predicting TSS and counting reads...")
     tss_outs <- mclapply(1:length(all_genes),function(iii){
       tryCatch({
         region <- gene_list[all_genes[iii]]
@@ -223,13 +220,14 @@ TSSpredict <- function(read_assignmnet_dist = 200,
         }
         return(outs)
       },
-      error=function(e){cat("Gene: ",all_genes[iii]," ERROR :",conditionMessage(e), "\n")})
+      error=function(e){cat("Gene: ",all_genes[iii]," excluded", "\n")})
     },mc.cores = ncore)
     tss_outs <- tss_outs[lengths(tss_outs) >0]
     tss_outs <- rbindlist(tss_outs,use.names=T)
     setDT(tss_outs,"unmerged_tss")
   }
 
+  print("TSS prediction finished!")
   return(tss_outs)
 }
 

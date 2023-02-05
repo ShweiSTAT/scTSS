@@ -12,7 +12,6 @@ TSSpredict(
   read_number = 50,
   gene_of_interest = NULL,
   if_paired = TRUE,
-  oneTSSgene_path = NULL,
   ncore = 1,
   bam_path,
   anno_path,
@@ -47,10 +46,6 @@ that is in the provided annotation.}
 
 \item{if_paired}{FALSE/TRUE, specifying if we have paired-end data (TRUE)
 or single-end data (FALSE). Default set to TRUE.}
-
-\item{oneTSSgene_path}{The path to a list of gene that are used in the
-learning step for single-end data. This only need to be specified if the
-data is single-end. Defaults to NULL.}
 
 \item{ncore}{An integer specifying the number of cores used. Defaults to 1.}
 
