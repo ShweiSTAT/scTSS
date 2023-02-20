@@ -1,8 +1,8 @@
 ## a function to set the rownames (TSS) the same across samples
-## the input should be a list of usage matrices and separated by condotions
+## the input should be a list of usage matrices and separated by condition
 setTSSnamesSame <- function(x, join_type="inner"){
 
-  if(sum(!(join_type=="inner"|join_type=="outter"))>0){
+  if(sum(!(join_type=="inner"|join_type=="outer"))>0){
     stop("ERROR: Enter a correct joint_type" )
   }
 

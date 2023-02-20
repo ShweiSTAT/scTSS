@@ -7,11 +7,14 @@
 #' of labels should be of the same length.
 #' @param permutation_times An integer specifying the permutation times
 #' for DU test. Defaults to 2000.
-#' @param join_type An character, either being "inner" or "outer",
-#' specifying how we unify the merged TSS regions across input usage matrices.
-#' "inner" means we only keep the TSS regions that are shared
-#' by all input matrices for differential usage test.
-#' "outer" means we keep all TSS regions for all input matrices.
+#' @param join_type a character, specifies how we unify the TSS regions
+#' in the input TSS usage matrices. A TSS region is not necessarily
+#' expressed in every sample. If we set the join_type to "inner",
+#'  we only consider TSS regions that are expressed in all of the
+#'  samples, which is a conservative choice. If we set the
+#'  join_type to “outer”, we only consider TSS regions that
+#'  are expressed in as few as one sample. This choice is more
+#'  sensitive in finding DU TSS. The default is "inner".
 #' @param ncore An integer specifying the number of cores used. Defaults to 1.
 #'
 #' @return \code{TSSduTest} outputs the DU test results and the
@@ -75,6 +78,8 @@ TSSduTest <- function(DU_input,
     error=function(e){cat(iii,"Gene: ",TobeGenes[iii]," ERROR :",conditionMessage(e), "\n")})
   },mc.cores = ncore)
   DU_outs <- do.call(rbind,DU_outs)
+  DU_outs <- as.data.frame(DU_outs)
+  DU_outs[,c(1,2,4,6,7)] <- sapply(DU_outs[,c(1,2,4,6,7)],as.numeric)
 
   return(list(DU_result = DU_outs,
               design_matrix = z))

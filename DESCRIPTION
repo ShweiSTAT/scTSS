@@ -1,7 +1,8 @@
+
 Package: scTSS
 Title: Study transcription start site (TSS) by 5' scRNA-seq data
 Version: 0.1.0
-Author: Shiwei Fu
+Author: Shiwei Fu <shiwei.fu@email.ucr.edu>, Wei Vivian Li <weil@ucr.edu>
 Maintainer: Shiwei Fu <shiwei.fu@email.ucr.edu>
 Description: A toolkit for predicting and quantifying TSS and conducting differential TSS usage tests between multiple conditions.
 License: MIT + file LICENSE
