@@ -1,5 +1,42 @@
-To download scTSS form github and load package, please follow:
-```
-devtools::install_github("ShiweiweiLikeWasabi/scTSS")
+scTSS: a package to study transcription start site (TSS) based on 5’
+scRNA-seq data
+================
+Shiwei Fu, Wei Vivian Li
+2023-02-20
+
+## Introduction
+
+scTSS is a bioinformatics package that leverages 5’ single-cell RNA
+sequencing (scRNA-seq) data to predict transcription start sites (TSS)
+and investigate alternative TSS usage between different conditions or
+cell types. scTSS consists of two primary stages: TSS prediction and
+differential TSS usage (DU) testing.
+
+During the TSS prediction stage, scTSS is capable of analyzing both
+single-end and paired-end data, yielding robust and accurate TSS
+predictions. In the DU testing stage, scTSS can perform DU tests across
+multiple conditions or cell types, providing users with reliable and
+informative results.
+
+## Installation
+
+`scTSS` is now available on GitHub. To download and load package please
+follow:
+
+``` r
+devtools::install_github("https://github.com/ShweiSTAT/scTSS")
 library(scTSS)
 ```
+
+## Usage
+
+For more information, please use this
+[link](https://github.com/ShweiSTAT/scTSS/wiki/scTSS-Tutorial) to see
+the detailed tutorial.
+
+## Issues and communications
+
+If you have any issues using this package, please post
+[here](https://github.com/ShweiSTAT/scTSS/issues). Any suggestions and
+comments are welcome! For suggestions and comments, please email to
+Shiwei Fu (<shiwei.fu@email.ucr.edu>) or Wei Vivian Li (<weil@ucr.edu>).
