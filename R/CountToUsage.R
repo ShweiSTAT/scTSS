@@ -7,7 +7,7 @@
 #' Defaults to 30.
 #'
 #' @return \code{CountToUsage} outputs a matrix of usage for the
-#' merged TSS by cell. This matrix is stored in data.table format.
+#' merged TSS regions by cell. This matrix is stored in data.table format.
 #' @export CountToUsage
 #' @importFrom data.table .SD := data.table rbindlist set setDT
 #' @import parallel

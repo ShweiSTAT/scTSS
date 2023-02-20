@@ -17,8 +17,8 @@
 #'  sensitive in finding DU TSS. The default is "inner".
 #' @param ncore An integer specifying the number of cores used. Defaults to 1.
 #'
-#' @return \code{TSSduTest} outputs the DU test results and the
-#' design matrix used for DU test.
+#' @return \code{TSSduTest} outputs the DU results and the
+#' design matrix used for DU.
 #' @export TSSduTest
 #' @importFrom  data.table .SD := data.table rbindlist set setDT
 #' @import parallel

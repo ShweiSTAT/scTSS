@@ -8,7 +8,7 @@
 #' @param ncore An integer specifying the number of cores used. Defaults to 1.
 #'
 #' @return \code{TSSmerge} outputs a matrix of read counts for the
-#' predicted TSS by cell. This matrix is stored in data.table format.
+#' merged TSS regions by cell. This matrix is stored in data.table format.
 #' @export TSSmerge
 #' @importFrom  data.table .SD := data.table rbindlist set setDT
 #' @import parallel
