@@ -134,7 +134,7 @@ TSSpredict <- function(read_assignmnet_dist = 200,
 
   }else{
     ## 1) The learning step
-    print("We are learning the adjstment distance for your input single-end data...")
+    print("We are learning the adjustment distance for your input single-end data...")
     tss_learnt <- mclapply(1:length(oneTSSgene),function(iii){
       tryCatch({
         region <- gene_list[oneTSSgene[iii]]
@@ -174,7 +174,7 @@ TSSpredict <- function(read_assignmnet_dist = 200,
     tss_learnt <- unlist(tss_learnt)
     tss_learnt <- tss_learnt[which(tss_learnt>0 & abs(tss_learnt)<600)]
     tss_learnt <- ceiling(median(tss_learnt))
-    print(paste0("The learnt adjstment distance for sample ",
+    print(paste0("The learnt adjustment distance for sample ",
                  bam_path," is ",
                  tss_learnt, "bp."))
 
