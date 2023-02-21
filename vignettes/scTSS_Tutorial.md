@@ -2,8 +2,9 @@
 
 scTSS is a package that can leverage the 5’ single-cell RNA-seq data to
 study the transcription start site (TSS) at single-cell resolution.
-scTSS comprises of two main stages, TSS prediction and differential
-usage test for TSSs across two or multiple conditions or cell types.
+scTSS comprises of two main stages, TSS prediction and differential TSS
+usage (DU) test for TSSs across two or multiple conditions or cell
+types.
 
 To download scTSS from github and load package, please follow:
 
