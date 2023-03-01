@@ -1,7 +1,7 @@
 #' DU TSS test
 #'
-#' @param DU_input A list of TSS usage matrices.
-#' The order the matrices should match the sample label.
+#' @param DU_input A list of TSS usage matrices output from \code{CountToUsage}.
+#' The order the matrices should match the sample labels in "sample_label".
 #' @param sample_label A vector of characters specifying the condition
 #' labels for the input matrices. The number of input matrices and vector
 #' of labels should be of the same length.
@@ -12,10 +12,11 @@
 #' expressed in every sample. If we set the join_type to "inner",
 #'  we only consider TSS regions that are expressed in all of the
 #'  samples, which is a conservative choice. If we set the
-#'  join_type to “outer”, we only consider TSS regions that
-#'  are expressed in as few as one sample. This choice is more
+#'  join_type to “outer”, we test TSS regions that
+#'  are expressed in as few as only one sample. This choice is more
 #'  sensitive in finding DU TSS. The default is "inner".
-#' @param ncore An integer specifying the number of cores used. Defaults to 1.
+#' @param ncore An integer specifying the number of cores used for computation.
+#' Defaults to 1.
 #'
 #' @return \code{TSSduTest} outputs the DU results and the
 #' design matrix used for DU.

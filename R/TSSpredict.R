@@ -1,26 +1,31 @@
 #' Splicing-aware TSS prediction from .bam file
 #'
 #' @param read_assignmnet_dist An integer specifying the threshold distance we
-#' use to assign reads to TSS candidates. Defaults to 200.
-#' @param gene_extension An integer specifying the extension before the
-#' annotated 5' of a gene. Defaults to 500.
-#' @param tss_filtering_distance An integer specifying the threshold distance
-#' for TSS candidates that should be considered from the same genuine TSS.
-#' This should be set to the read length of the sequence technology.
-#' Defaults to 150.
+#' use to assign reads to TSS candidates. A read will be assigned to a
+#' TSS candidate, if the distance from the read to the TSS candidate is
+#' smaller than this threshold. Defaults to 200.
+#' @param gene_extension An integer specifying the length of the extended region
+#' before the annotated 5' of a gene when predicting TSS. Defaults to 500.
+#' @param tss_filtering_distance An integer specifying the threshold distance used
+#' to filter out false TSS candidates related to mRNA splicing.
+#' This should be set to the read length of the sequence
+#' technology. Defaults to 150.
 #' @param reads_percentage A percentage specifying the minim percentage of
-#' reads on a gene should be assigned to a qualified TSS candidates.
+#' reads on a gene should be assigned to a correct TSS candidates.
+#' This is used to filter out false TSS candidate due to background noise.
 #' Defaults to 0.05.
 #' @param read_number An integer specifying the minim number of reads that
-#' should be assigned to a qualified TSS candidate. Defaults to 50.
+#' should be assigned to a correct TSS candidate.
+#' This is used to filter out false TSS candidate due to background noise.
+#' Defaults to 50.
 #' @param gene_of_interest A character or a vector of characters, specifying
 #' the genes that are of interest in terms of predicting TSS.
 #' The default is NULL, which means we need to check all genes provided by the
-#' the genome annotation (see anno_path). Otherwise provide a subset of gene IDs
-#' that is in the provided annotation.
+#' the genome annotation (see anno_path).
 #' @param if_paired FALSE/TRUE, specifying if we have paired-end data (TRUE)
 #' or single-end data (FALSE). Default set to TRUE.
-#' @param ncore An integer specifying the number of cores used. Defaults to 1.
+#' @param ncore An integer specifying the number of cores used for computation.
+#' Defaults to 1.
 #' @param bam_path The path to the .bam, which should be stored under the same
 #' directory as its .bai file.
 #' @param tss_path The path to the .txt file that stores the information

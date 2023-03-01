@@ -1,9 +1,9 @@
 #' Convert TSS count to TSS usage
 #'
-#' @param tss_count_matrix A TSS count matrix.
+#' @param tss_count_matrix A TSS count matrix output from \code{TSSmerge}.
 #' @param num_cell An integer specifying the threshold used to filter out
 #' TSSs that are lowly expressed. A TSS must be expressed in this
-#' many of cells for a single sample. Otherwise it will be removed.
+#' many of cells. Otherwise it will be removed.
 #' Defaults to 30.
 #'
 #' @return \code{CountToUsage} outputs a matrix of usage for the

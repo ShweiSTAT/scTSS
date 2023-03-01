@@ -7,16 +7,16 @@
 CountToUsage(tss_count_matrix, num_cell = 30)
 }
 \arguments{
-\item{tss_count_matrix}{A TSS count matrix.}
+\item{tss_count_matrix}{A TSS count matrix output from \code{TSSmerge}.}
 
 \item{num_cell}{An integer specifying the threshold used to filter out
 TSSs that are lowly expressed. A TSS must be expressed in this
-many of cells for a single sample. Otherwise it will be removed.
+many of cells. Otherwise it will be removed.
 Defaults to 30.}
 }
 \value{
 \code{CountToUsage} outputs a matrix of usage for the
-merged TSS by cell. This matrix is stored in data.table format.
+merged TSS regions by cell. This matrix is stored in data.table format.
 }
 \description{
 Convert TSS count to TSS usage

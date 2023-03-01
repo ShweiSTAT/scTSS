@@ -13,8 +13,8 @@ TSSduTest(
 )
 }
 \arguments{
-\item{DU_input}{A list of TSS usage matrices.
-The order the matrices should match the sample label.}
+\item{DU_input}{A list of TSS usage matrices output from \code{CountToUsage}.
+The order the matrices should match the sample labels in "sample_label".}
 
 \item{sample_label}{A vector of characters specifying the condition
 labels for the input matrices. The number of input matrices and vector
@@ -23,17 +23,21 @@ of labels should be of the same length.}
 \item{permutation_times}{An integer specifying the permutation times
 for DU test. Defaults to 2000.}
 
-\item{join_type}{An character, either being "inner" or "outer",
-specifying how we unify the merged TSS regions across input usage matrices.
-"inner" means we only keep the TSS regions that are shared
-by all input matrices for differential usage test.
-"outer" means we keep all TSS regions for all input matrices.}
+\item{join_type}{a character, specifies how we unify the TSS regions
+in the input TSS usage matrices. A TSS region is not necessarily
+expressed in every sample. If we set the join_type to "inner",
+ we only consider TSS regions that are expressed in all of the
+ samples, which is a conservative choice. If we set the
+ join_type to “outer”, we test TSS regions that
+ are expressed in as few as only one sample. This choice is more
+ sensitive in finding DU TSS. The default is "inner".}
 
-\item{ncore}{An integer specifying the number of cores used. Defaults to 1.}
+\item{ncore}{An integer specifying the number of cores used for computation.
+Defaults to 1.}
 }
 \value{
-\code{TSSduTest} outputs the DU test results and the
-design matrix used for DU test.
+\code{TSSduTest} outputs the DU results and the
+design matrix used for DU.
 }
 \description{
 DU TSS test

@@ -8,17 +8,18 @@ TSSmerge(tss_matrices, tss_filtering_distance, ncore = 1)
 }
 \arguments{
 \item{tss_matrices}{A list of TSS count matrices output
-from \code{TSSpredict}. Each element should a matrix.}
+from \code{TSSpredict}. Each element in the list should a matrix.}
 
 \item{tss_filtering_distance}{An integer specifying the threshold distance
-for TSS candidates that should be considered from the same genuine TSS.
+to merge TSS candidates into a same TSS region.
 This should be set to the same as in \code{TSSpredict}. Defaults to 1.}
 
-\item{ncore}{An integer specifying the number of cores used. Defaults to 1.}
+\item{ncore}{An integer specifying the number of cores used for computation.
+Defaults to 1.}
 }
 \value{
 \code{TSSmerge} outputs a matrix of read counts for the
-predicted TSS by cell. This matrix is stored in data.table format.
+merged TSS regions by cell. This matrix is stored in data.table format.
 }
 \description{
 TSS merging for TSS count matrices of multiple samples
