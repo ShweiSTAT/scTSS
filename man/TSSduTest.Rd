@@ -14,7 +14,7 @@ TSSduTest(
 }
 \arguments{
 \item{DU_input}{A list of TSS usage matrices output from \code{CountToUsage}.
-The order the matrices should match the sample labels in "sample_label".}
+The order of the matrices should match the sample labels in "sample_label".}
 
 \item{sample_label}{A vector of characters specifying the condition
 labels for the input matrices. The number of input matrices and vector
