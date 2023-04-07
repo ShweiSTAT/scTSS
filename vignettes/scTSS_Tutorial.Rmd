@@ -117,6 +117,7 @@ unmerged_TSS_matrices <- readRDS("./TSS_matrices.rds")
 
 # perform TSS merging
 mergedTSS_matrices <- TSSmerge(tss_matrices = unmerged_TSS_matrices,
+                               tss_filtering_distance = 150,
                                ncore = 2)
 ```
 
