@@ -4,7 +4,7 @@
 \alias{TSSmerge}
 \title{TSS merging for TSS count matrices of multiple samples}
 \usage{
-TSSmerge(tss_matrices, tss_filtering_distance, ncore = 1)
+TSSmerge(tss_matrices, tss_filtering_distance = 150, ncore = 1)
 }
 \arguments{
 \item{tss_matrices}{A list of TSS count matrices output
@@ -12,7 +12,7 @@ from \code{TSSpredict}. Each element in the list should a matrix.}
 
 \item{tss_filtering_distance}{An integer specifying the threshold distance
 to merge TSS candidates into a same TSS region.
-This should be set to the same as in \code{TSSpredict}. Defaults to 1.}
+This should be set to the same as in \code{TSSpredict}. Defaults to 150.}
 
 \item{ncore}{An integer specifying the number of cores used for computation.
 Defaults to 1.}

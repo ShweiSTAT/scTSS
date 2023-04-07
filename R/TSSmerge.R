@@ -4,7 +4,7 @@
 #' from \code{TSSpredict}. Each element in the list should a matrix.
 #' @param tss_filtering_distance An integer specifying the threshold distance
 #' to merge TSS candidates into a same TSS region.
-#' This should be set to the same as in \code{TSSpredict}. Defaults to 1.
+#' This should be set to the same as in \code{TSSpredict}. Defaults to 150.
 #' @param ncore An integer specifying the number of cores used for computation.
 #' Defaults to 1.
 #'
@@ -17,8 +17,8 @@
 #' @author Shiwei Fu, \email{shiwei.fu@email.ucr.edu}
 
 TSSmerge <- function(tss_matrices,
-                      tss_filtering_distance,
-                      ncore = 1){
+                    tss_filtering_distance = 150,
+                    ncore = 1){
 
   ## step1: read in all samples and summarize all genes to be handled
     allgene <- character()
