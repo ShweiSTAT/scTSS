@@ -1,0 +1,26 @@
+Package: scTSS
+Type: Package
+Title: Study transcription start site (TSS) by 5' scRNA-seq data
+Version: 0.1.0
+Author: Shiwei Fu <shiwei.fu@email.ucr.edu>, Wei Vivian Li <weil@ucr.edu>
+Maintainer: Shiwei Fu <shiwei.fu@email.ucr.edu>
+Description: A toolkit for predicting and quantifying TSS clusters based on 5' single-cell RNA-seq data and conducting differential TSS usage tests between conditions.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.1
+Imports: 
+    dplyr,
+    GenomicAlignments,
+    GenomicFeatures,
+    GenomicRanges,
+    parallel,
+    Rsamtools,
+    IRanges,
+    data.table,
+    stats,
+    lme4
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
