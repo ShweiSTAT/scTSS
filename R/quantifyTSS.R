@@ -21,12 +21,12 @@
 #' The default is NULL, which means we need to check all genes provided by the
 #' genome annotation (see anno_path).
 #' @param reads_percentage A percentage specifying the minim percentage of
-#' reads on a gene should be assigned to a valid TSS clusters within this sample.
+#' reads on a gene that should be assigned to a valid TSS clusters within this sample.
 #' This is used to filter out lowly expressed TSS clusters.
 #' Defaults to 0.05.
 #' @param read_number An integer specifying the minim number of reads that
 #' should be assigned to a valid TSS clusters within this sample.
-#' This is used to filter out lowly expressed TSS clusters.Defaults to 50.
+#' This is used to filter out lowly expressed TSS clusters. Defaults to 50.
 #' @param gene_extension An integer specifying the length of the extended region
 #' before the annotated 5' of a gene when quantifying TSS. Defaults to 500 (bp).
 #' @param if_paired FALSE/TRUE, specifying if we have paired-end data (TRUE)
@@ -35,9 +35,11 @@
 #' Defaults to 1.
 #'
 #' @return \code{quantifyTSS} returns a list containing these two elements:
-#' 1) TSS_cluster_counts, a data.table
-#' for the expression of each TSS clusters at cell level. 2) Column_meta, a data.frame
-#' containing the meta information for each of the columns in TSS_cluster_counts.
+#' 1) TSS_cluster_counts, a data.table for the expression (counts) of each
+#' TSS clusters at cell level. 2) Column_meta, a data.frame
+#' containing the meta information for each of the columns (cells)
+#' in TSS_cluster_counts. The columns in TSS_cluster_counts and
+#' the rows in Column_meta have one on one correspondence.
 #' @export quantifyTSS
 #'
 #' @import parallel
