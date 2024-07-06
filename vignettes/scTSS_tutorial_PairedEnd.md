@@ -44,6 +44,9 @@ each sample.
     <img src="pairedEndDemo.png" alt="Description of Image" style="max-width: 100%; height: auto;">
 </div>
 
+<a name="1"></a>
+<div style="text-align:center"><img src="pairedEndDemo.png" width="860"></div>
+
 
 After the preprocessing step, we need to use the **.bam** files to
 obtain predictions for TSS clusters by a bioinformatics tool compatible
