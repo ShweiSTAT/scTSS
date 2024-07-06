@@ -41,7 +41,7 @@ Thus, scTSS will rely on the existing tools to predict TSS clusters for
 each sample. 
 
 <div style="text-align:center">
-    <img src="pairedEndDemo.png" alt="pairedEndDemo" width="500" align="center">
+    <img src="vignettes/pairedEndDemo.png" alt="pairedEndDemo" width="400" align="center">
 </div>
 
 After the preprocessing step, we need to use the **.bam** files to
