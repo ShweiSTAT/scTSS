@@ -38,11 +38,13 @@ site (TSS), thus we call the paired-end data as “on-site” data. Most of
 the already available TSS analysis tools are capable of predicting TSS
 clusters based on the mapped genomic positions of the 5’ of the read 1.
 Thus, scTSS will rely on the existing tools to predict TSS clusters for
-each sample. 
+each sample.
 
-<div style="text-align:center">
-    <img src="https://github.com/ShweiSTAT/scTSS/blob/main/vignettes/pairedEndDemo.png" alt="pairedEndDemo" width="400" align="center">
-</div>
+<figure>
+<img src="/Users/shiweifu/Desktop/scTSS/vignettes/pairedEndDemo.png"
+alt="Paired-end data" />
+<figcaption aria-hidden="true">Paired-end data</figcaption>
+</figure>
 
 After the preprocessing step, we need to use the **.bam** files to
 obtain predictions for TSS clusters by a bioinformatics tool compatible
@@ -453,7 +455,7 @@ head(DU_input$col_meta)
 #> 6 Sample1_GCTCTGTGTGTTAAGA-1  Sample1 Activated T
 ```
 
-#### DU test
+## DU test
 
 After we have obtained the prepared TSS cluster count matrix and the
 column meta data, we can conduct DU test. We wrapped the DU test
