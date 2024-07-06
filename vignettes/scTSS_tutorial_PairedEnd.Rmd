@@ -12,6 +12,19 @@ knitr::opts_chunk$set(
 )
 ```
 
+scTSS is a package that can leverage the 5' single-cell RNA-seq data to study the transcription start site (TSS) at single-cell resolution. scTSS comprises of two main stages, TSS prediction and differential TSS usage (DU) test for TSSs across two or multiple conditions or cell types.
+
+To download scTSS from github and load package, please follow:
+
+```{r eval=FALSE}
+devtools::install_github("https://github.com/ShweiSTAT/scTSS")
+library(scTSS)
+```
+
+```{r echo=FALSE, eval=TRUE}
+library(scTSS)
+```
+
 The example data for this tutorial can be downloaded from this [link](https://www.dropbox.com/scl/fo/6m2xepe4wrleq5yl59w3h/AP8qu3d_1FVUKuHvxMrO9pg?rlkey=5u3h6qfsw4894x3z78ihapuad&st=g7yds674&dl=0). In this example, we have 5 samples (blood from 5 different human) with TSS clusters predicted based on paired-end 5' single-cell RNA-seq data. Our final goal is to detect differential TSS cluster usage between the B and Activated T cells across the 5 samples.
 
 # Preprocessing
@@ -83,7 +96,6 @@ head(unmerged_TSS_clusters$Sample1)
 An example for merging TSS clusters is shown below.
 
 ```{r eval= TRUE}
-library(scTSS)
 # perform TSS merging
 mergedTSS_clusters <- mergeTSS(unmerged_TSS_cluster_list = unmerged_TSS_clusters,
                                if_paired = TRUE,
