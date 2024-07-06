@@ -34,7 +34,9 @@ For the paired-end data, the preprocessing starts with the raw reads (**.fastq**
 # Predicting TSS clusters for a sample
 
 The paired-end 5' single-cell RNA-seq data contains both read 1 and read 2. The read 1 contains the direct information of the transcription start site (TSS), thus we call the paired-end data as "on-site" data. Most of the already available TSS analysis tools are capable of predicting TSS clusters based on the mapped genomic positions of the 5' of the read 1. Thus, scTSS will rely on the existing tools to predict TSS clusters for each sample. 
+
 ![Paired-end data](/Users/shiweifu/Desktop/scTSS/vignettes/pairedEndDemo.png)
+
 
 After the preprocessing step, we need to use the **.bam** files to obtain predictions for TSS clusters by a bioinformatics tool compatible with. We recommend using SCAFE. Please refer to this [link](https://github.com/chung-lab/SCAFE) for details. After running SCAFE (or any other TSS prediction tools of choice), we should obtain a prediction of TSS clusters for each sample. As for SCAFE, the predicted TSS clusters are stored in a **.bed** file, please refer to this [file](https://www.dropbox.com/scl/fi/hhri3bfxc1tt35jz9ag52/example_SCAFE_clusters.bed?rlkey=u6ztyzfzxmch67eq6ih0qdpa1&st=w1x3l88t&dl=0) as an example. 
 
