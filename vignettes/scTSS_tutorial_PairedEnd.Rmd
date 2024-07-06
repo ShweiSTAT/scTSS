@@ -314,7 +314,7 @@ head(DU_input$TSS_count_matrix[,1:3])
 head(DU_input$col_meta)
 ```
 
-#### DU test
+## DU test
 
 After we have obtained the prepared TSS cluster count matrix and the column meta data, we can conduct DU test. We wrapped the DU test functionality into function `DUtest`. This function has these must-have arguments:
 
