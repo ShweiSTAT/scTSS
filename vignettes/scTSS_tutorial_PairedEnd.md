@@ -40,7 +40,7 @@ clusters based on the mapped genomic positions of the 5’ of the read 1.
 Thus, scTSS will rely on the existing tools to predict TSS clusters for
 each sample. 
 
-<div style="text-align: center;">
+<div style="display: flex; justify-content: center;">
     <img src="pairedEndDemo.png" alt="Description of Image" style="max-width: 100%; height: auto;">
 </div>
 
