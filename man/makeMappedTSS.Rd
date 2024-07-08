@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeMappedTSS.R
 \name{makeMappedTSS}
 \alias{makeMappedTSS}
-\title{Make Mapped table for a sample}
+\title{Make Mapped TSS table for a sample}
 \usage{
 makeMappedTSS(
   anno_path,
@@ -41,5 +41,5 @@ contains four columns: seqnames, tss (the location of the Mapped TSS),
 strand and counts (the count of reads aligned with the Mapped TSS)
 }
 \description{
-Make Mapped table for a sample
+Make Mapped TSS table for a sample
 }

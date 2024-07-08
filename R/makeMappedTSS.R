@@ -1,4 +1,4 @@
-#' Make Mapped table for a sample
+#' Make Mapped TSS table for a sample
 #'
 #' @param anno_path The path to the genome annotation file, which should be in
 #' the .gtf format.

@@ -13,13 +13,13 @@ merge_match_for_SingleEnd_data <- function(single_unmerged_region,merged_regions
   single_unmerged_region <- as.data.frame(single_unmerged_region)
 
   if(strand == "-"){
-    matched_merged_regions <- matched_merged_regions[order(matched_merged_regions$the5prime_of_TSS_cluster,
+    matched_merged_regions <- matched_merged_regions[order(matched_merged_regions$tss5prime,
                                                            decreasing = TRUE),]
   }
   if(nrow(matched_merged_regions)<=1){
     # if only one match, output the single unmerged regions
     outs <- data.frame(seqnames = single_unmerged_region$seqnames,
-                       the5prime_of_TSS_cluster = single_unmerged_region$the5prime_of_TSS_cluster,
+                       tss5prime = single_unmerged_region$tss5prime,
                        width = single_unmerged_region$width,
                        strand = single_unmerged_region$strand,
                        org_start = single_unmerged_region$org_start,
@@ -33,12 +33,12 @@ merge_match_for_SingleEnd_data <- function(single_unmerged_region,merged_regions
                                           widths = matched_merged_regions$width)
     split_rst_org_regions <- data.frame(split_rst_org_regions)
     outs <- data.frame(seqnames = single_unmerged_region$seqnames,
-                       the5prime_of_TSS_cluster = matched_merged_regions$the5prime_of_TSS_cluster,
+                       tss5prime = matched_merged_regions$tss5prime,
                        width = matched_merged_regions$width,
                        strand = single_unmerged_region$strand,
                        org_start = split_rst_org_regions$start,
                        org_end = split_rst_org_regions$end)
-    outs <- outs[order(outs$the5prime_of_TSS_cluster,
+    outs <- outs[order(outs$tss5prime,
                        decreasing = FALSE),]
   }
 
