@@ -171,11 +171,15 @@ quantifyTSS <- function(anno_path,
 
 
     # check if gene_of_interest is correct
-    if(sum(!gene_of_interest%in%names(gene_list))==0){
-      all_genes <- gene_of_interest
-      gene_list <- gene_list[all_genes]
+    if(is.null(gene_of_interest)){
+      all_genes <- names(gene_list)
     }else{
-      stop(" \"gene_of_interest\" is not valide. Please provide real gene names.")
+      if(sum(!gene_of_interest%in%names(gene_list))==0){
+        all_genes <- gene_of_interest
+        gene_list <- gene_list[all_genes]
+      }else{
+        stop(" \"gene_of_interest\" is not valide. Please provide real gene names.")
+      }
     }
 
 

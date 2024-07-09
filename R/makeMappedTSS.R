@@ -65,7 +65,7 @@ makeMappedTSS <- function(anno_path,
       }
       return(outs)
     },
-    error=function(e){cat("Gene: ",all_genes[iii]," ERROR :",conditionMessage(e), "\n")})
+    error=function(e){})
   },
   mc.cores = ncore)
 
