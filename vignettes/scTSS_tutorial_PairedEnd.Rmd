@@ -204,7 +204,7 @@ In the `TSS_cluster_counts`,each TSS clusters being quantified is given a unique
 # example of the TSS quantification output for Sample1
 
 ## TSS cluster counts
-head(Sample1_quantified$TSS_clsuter_counts[,1:3])
+head(Sample1_quantified$TSS_cluster_counts[,1:3])
 
 ## column meta for TSS cluster counts
 head(Sample1_quantified$Column_meta)

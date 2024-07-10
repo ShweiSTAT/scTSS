@@ -40,9 +40,11 @@ clusters based on the mapped genomic positions of the 5’ of the read 1.
 Thus, scTSS will rely on the existing tools to predict TSS clusters for
 each sample.
 
-<div style="display: flex; justify-content: center;">
-    <img src="https://github.com/ShweiSTAT/scTSS/blob/main/vignettes/pairedEndDemo.png" alt="pairedEndDemo" width="400">
-</div>
+<figure>
+<img src="/Users/shiweifu/Desktop/scTSS/vignettes/pairedEndDemo.png"
+alt="Paired-end data" />
+<figcaption aria-hidden="true">Paired-end data</figcaption>
+</figure>
 
 After the preprocessing step, we need to use the **.bam** files to
 obtain predictions for TSS clusters by a bioinformatics tool compatible
@@ -274,7 +276,7 @@ chr21:ENSG00000141956:41879301:41879351:-.
 # example of the TSS quantification output for Sample1
 
 ## TSS cluster counts
-head(Sample1_quantified$TSS_clsuter_counts[,1:3])
+head(Sample1_quantified$TSS_cluster_counts[,1:3])
 #>                                 TSS_clusters Sample1_AAACCTGAGAGTGAGA-1
 #>                                       <char>                      <int>
 #> 1: chr21:ENSG00000141956:41879301:41879351:-                          0
