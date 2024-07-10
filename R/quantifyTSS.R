@@ -146,7 +146,7 @@ quantifyTSS <- function(anno_path,
              paste0(cell_meta$sampleID,"_",cell_meta$barcode) )
     cell_meta$barcode <- paste0(cell_meta$sampleID,"_",cell_meta$barcode)
 
-    return(list(TSS_clsuter_counts = tss_outs,
+    return(list(TSS_cluster_counts = tss_outs,
                 Column_meta = cell_meta))
 
   }else{
@@ -240,7 +240,7 @@ quantifyTSS <- function(anno_path,
              paste0(cell_meta$sampleID,"_",cell_meta$barcode) )
     cell_meta$barcode <- paste0(cell_meta$sampleID,"_",cell_meta$barcode)
 
-    return(list(TSS_clsuter_counts = tss_outs,
+    return(list(TSS_cluster_counts = tss_outs,
                 Column_meta = cell_meta))
   }
 
