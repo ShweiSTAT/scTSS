@@ -39,12 +39,9 @@ read 2 does not directly capture the location of TSS. However, the
 position of read 2 follows a relation with the genuine TSS, which is
 related to the length of cDNA.
 
-<figure>
-<img
-src="/Users/shiweifu/Desktop/scTSS_buildingBlocks/example_data/SingleEnd/singleEndData/SingleEndDemo.png"
-alt="Single-end data" />
-<figcaption aria-hidden="true">Single-end data</figcaption>
-</figure>
+<div style="display: flex; justify-content: center;">
+    <img src="https://github.com/ShweiSTAT/scTSS/blob/main/vignettes/SingleEndDemo.png" alt="pairedEndDemo" width="400">
+</div>
 
 We call the single-end data as “near-site” data. Most of the already
 available TSS analysis tools are only compatible with the paired-end (or
