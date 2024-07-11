@@ -138,6 +138,7 @@ adjustTSS <- function(anno_path,
 
   adj_TSS_clusters <- adj_TSS_clusters[lengths(adj_TSS_clusters)>0]
   adj_TSS_clusters <- do.call(rbind,adj_TSS_clusters)
+  adj_TSS_clusters <- unique(adj_TSS_clusters)
 
   return(list(learnt_adj_dist = TSS_adj_learnt_all,
               adj_TSS_clusters = adj_TSS_clusters)
