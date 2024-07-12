@@ -73,7 +73,6 @@ glmm_test_for_a_gene <- function(temp_full_data,
   outs <- data.frame(TSS_names = rownames(temp_full_data),
                      gene_exp_level = gene_exp_level,
                      TSS_exp_level = TSS_exp_level,
-
                      pval = pvals,
                      #do.call(rbind,betas),
                      max_usage_con = max_usage_con,
@@ -82,9 +81,9 @@ glmm_test_for_a_gene <- function(temp_full_data,
                      min_usage = min_usage)
 
 
-  if(length(grep("ntercept",colnames(outs))) ==1){
-    colnames(outs)[grep("ntercept",colnames(outs))] <- "Intercept"
-  }
+  # if(length(grep("ntercept",colnames(outs))) ==1){
+  #   colnames(outs)[grep("ntercept",colnames(outs))] <- "Intercept"
+  # }
 
 
   return(outs)
