@@ -71,8 +71,8 @@ DUtest <- function(mat,
   },mc.cores = ncore)
 
   outs <- do.call(rbind,rst)
-  outs$pval_adj <- p.adjust(outs$pval,
-                            method = "BH")
+  # outs$pval_adj <- p.adjust(outs$pval,
+  #                           method = "BH")
 
   print("Done!")
   return(outs)
