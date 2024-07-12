@@ -42,17 +42,6 @@ SetMatrixNameSame <- function(Quantified_TSS_list,
   names(TSS_counts_list) <- names(Quantified_TSS_list)
   names(col_meta_list) <- names(Quantified_TSS_list)
 
-  # ## pre_step1: make sure if the TSS_counts_list and col_meta_list are of the same length
-  # if(sum(names(TSS_counts_list)!=names(col_meta_list))>0 ){
-  #   stop("Please make sure the names for TSS counts and the col_meta_list are matched.")
-  # }
-  # ## pre_step2: make sure the col_meta_list contains the necessary info
-  # if(sum(!unlist(lapply(col_meta_list, function(x){
-  #   sum(c("barcode","condition","sampleID" )%in%colnames(x) ) ==3
-  # }))) >0){
-  #   stop("Please make sure \'barcode\',\'condition\',\'sampleID\' are included in all column meta data.")
-  # }
-
   ## step 1: remove TSS clusters that have a low expression level
   for (i in 1:length(TSS_counts_list)) {
     temp <- TSS_counts_list[[i]]
