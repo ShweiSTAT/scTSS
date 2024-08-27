@@ -108,7 +108,7 @@ quantifyTSS <- function(anno_path,
 
     ## out reduced results: reduced genes
     all_genes <- names(gene_list)
-    ## out reduced results：tss_clsuters
+    ## out reduced results：tss_clusters
     clusters_gr <- makeGRangesFromDataFrame(df = tss_clusters,
                                             keep.extra.columns = TRUE)
     ######################## quantify: gene by gene
@@ -200,7 +200,7 @@ quantifyTSS <- function(anno_path,
 
     ## out reduced results: reduced genes
     all_genes <- names(gene_list)
-    ## out reduced results：tss_clsuters
+    ## out reduced results：tss_clusters
     clusters_gr <- makeGRangesFromDataFrame(df = tss_clusters,
                                             keep.extra.columns = TRUE)
 

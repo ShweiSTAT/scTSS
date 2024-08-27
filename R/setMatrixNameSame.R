@@ -90,7 +90,7 @@ SetMatrixNameSame <- function(Quantified_TSS_list,
                                    split = ":",
                                    fixed = TRUE))[,2]
   genes_retained <- unique(genes_bentch)
-  print(paste0(nrow(TSS_counts_out), " TSS clsuters on ",
+  print(paste0(nrow(TSS_counts_out), " TSS clusters on ",
                length(genes_retained), " genes are in the final output."))
 
 
