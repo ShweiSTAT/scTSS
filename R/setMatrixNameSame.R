@@ -46,7 +46,7 @@ SetMatrixNameSame <- function(Quantified_TSS_list,
   for (i in 1:length(TSS_counts_list)) {
     temp <- TSS_counts_list[[i]]
     temp_idx <- which(rowSums(temp[,-1] >0 ) / (ncol(temp) - 1 ) > exp_level)
-    print(paste0("In sample ", names(TSS_counts_list)[i]," ",nrow(temp) - length(temp_idx), " TSS clusters were delected for low expression."))
+    print(paste0("In sample ", names(TSS_counts_list)[i]," ",nrow(temp) - length(temp_idx), " TSS clusters were removed for low expression."))
     TSS_counts_list[[i]] <- temp[temp_idx]
   }
 
@@ -81,7 +81,7 @@ SetMatrixNameSame <- function(Quantified_TSS_list,
     genes_retained <- names(which(gene_freq >1))
     TSS_counts_out <- TSS_counts_out[which(genes_bentch%in%genes_retained)]
     print(paste0(length(genes_bentch) - nrow(TSS_counts_out),
-                 " TSS clusters were delected for being the single TSS cluster on gene."))
+                 " TSS clusters were removed for being the single TSS cluster on gene."))
   }
 
   ## outs
