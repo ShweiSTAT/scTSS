@@ -1,15 +1,16 @@
 scTSS for studying transcription start sites using 5’ scRNA-seq data
 ================
 Shiwei Fu, Wei Vivian Li
-2024-07-09
+2024-08-27
 
 ## Introduction
 
 scTSS is a package that can leverage the 5’ single-cell RNA-seq data
 (both paired-end and single-end data) to study the transcription start
 site (TSS) at single-cell resolution. scTSS comprises of two main
-stages, TSS prediction and differential TSS usage (DU) test for TSSs
-across two or multiple conditions or cell types.
+stages, TSS cluster prediction and quantification, and differential TSS
+usage (DU) test for TSSs across two or multiple conditions or cell
+types.
 
 ## Installation
 
