@@ -6,32 +6,38 @@
 \usage{
 SetMatrixNameSame(
   Quantified_TSS_list,
+  join_type = "inner",
   exp_level = 0,
-  remove_oneTSS_gene = TRUE,
-  join_type = "inner"
+  remove_oneTSS_gene = TRUE
 )
 }
 \arguments{
 \item{Quantified_TSS_list}{A list of the outputs from the
 "quantifyTSS" function. Each element of the list is a single output.}
 
-\item{exp_level}{A percentage specifying, within a sample
-(specified by "sampleID" in the column meta data) the minim percentage of
-cells that should have a valid TSS cluster expressed. Default is 0,
-indicating we will not remove TSS clusters based on expression levels.}
-
-\item{remove_oneTSS_gene}{TRUE/FALSE, specifying if the genes with only one
-TSS cluster will be removed. Default is TRUE, indicating the one-TSS
-gene will be removed.}
-
 \item{join_type}{a character, specifies how we prepare the TSS clusters
 for the DU test. A TSS cluster is not necessarily
 expressed in every sample. If we set the join_type to "inner",
 we only consider TSS clusters that are expressed in all of the
 samples, which is a conservative choice. If we set the
-join_type to “outer”, we test TSS regions that
-are expressed in as few as only one sample. This choice is more
-sensitive in finding DU TSS. The default is "inner".}
+join_type to “other”, we test TSS clusters that
+are expressed in more than a certain percentage of samples.
+This percentage is controlled by parameter `exp_level`.
+This choice is more sensitive in finding DU TSS. The default is "inner".}
+
+\item{exp_level}{A percentage. When `join_type` is set to "inner,"
+this parameter specifies the minimum percentage of cells within
+a sample (as indicated by "sampleID" in the column metadata)
+required for a TSS cluster to be considered valid.
+When `join_type` is other,
+it specifies the minimum percentage of samples
+in which a TSS cluster must be expressed to be considered valid.
+Default is 0, indicating we will not remove TSS clusters based on
+expression levels.}
+
+\item{remove_oneTSS_gene}{TRUE/FALSE, specifying if the genes with only one
+TSS cluster will be removed. Default is TRUE, indicating the one-TSS
+gene will be removed.}
 }
 \value{
 \code{setMatrixNameSame} returns a list containing these two elements:
