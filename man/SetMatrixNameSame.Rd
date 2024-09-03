@@ -6,7 +6,7 @@
 \usage{
 SetMatrixNameSame(
   Quantified_TSS_list,
-  join_type = "inner",
+  filtering_level = "cell",
   exp_level = 0,
   remove_oneTSS_gene = TRUE
 )
@@ -15,21 +15,24 @@ SetMatrixNameSame(
 \item{Quantified_TSS_list}{A list of the outputs from the
 "quantifyTSS" function. Each element of the list is a single output.}
 
-\item{join_type}{a character, specifies how we prepare the TSS clusters
-for the DU test. A TSS cluster is not necessarily
-expressed in every sample. If we set the join_type to "inner",
-we only consider TSS clusters that are expressed in all of the
-samples, which is a conservative choice. If we set the
-join_type to “other”, we test TSS clusters that
+\item{filtering_level}{A character, specifies how we filter out
+lowly expressed TSS clusters for the DU test.
+A TSS cluster is not necessarily
+expressed in every sample. If we set the filtering_level to "cell" (default),
+we only consider TSS clusters that are expressed
+in more than a percentage (controlled by parameter `exp_level`)
+of cells within each sample,
+which is a conservative choice. If we set the
+filtering_level to “sample”, we test TSS clusters that
 are expressed in more than a certain percentage of samples.
 This percentage is controlled by parameter `exp_level`.
-This choice is more sensitive in finding DU TSS. The default is "inner".}
+This choice is more sensitive in finding DU TSS.}
 
-\item{exp_level}{A percentage. When `join_type` is set to "inner,"
+\item{exp_level}{A percentage. When `filtering_level` is set to "cell,"
 this parameter specifies the minimum percentage of cells within
 a sample (as indicated by "sampleID" in the column metadata)
 required for a TSS cluster to be considered valid.
-When `join_type` is other,
+When `filtering_level` is "sample",
 it specifies the minimum percentage of samples
 in which a TSS cluster must be expressed to be considered valid.
 Default is 0, indicating we will not remove TSS clusters based on

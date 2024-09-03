@@ -2,20 +2,23 @@
 #'
 #' @param Quantified_TSS_list A list of the outputs from the
 #' "quantifyTSS" function. Each element of the list is a single output.
-#' @param join_type a character, specifies how we prepare the TSS clusters
-#' for the DU test. A TSS cluster is not necessarily
-#' expressed in every sample. If we set the join_type to "inner",
-#' we only consider TSS clusters that are expressed in all of the
-#' samples, which is a conservative choice. If we set the
-#' join_type to “other”, we test TSS clusters that
+#' @param filtering_level A character, specifies how we filter out
+#' lowly expressed TSS clusters for the DU test.
+#' A TSS cluster is not necessarily
+#' expressed in every sample. If we set the filtering_level to "cell" (default),
+#' we only consider TSS clusters that are expressed
+#' in more than a percentage (controlled by parameter `exp_level`)
+#' of cells within each sample,
+#' which is a conservative choice. If we set the
+#' filtering_level to “sample”, we test TSS clusters that
 #' are expressed in more than a certain percentage of samples.
 #' This percentage is controlled by parameter `exp_level`.
-#' This choice is more sensitive in finding DU TSS. The default is "inner".
-#' @param exp_level A percentage. When `join_type` is set to "inner,"
+#' This choice is more sensitive in finding DU TSS.
+#' @param exp_level A percentage. When `filtering_level` is set to "cell,"
 #' this parameter specifies the minimum percentage of cells within
 #' a sample (as indicated by "sampleID" in the column metadata)
 #' required for a TSS cluster to be considered valid.
-#' When `join_type` is other,
+#' When `filtering_level` is "sample",
 #' it specifies the minimum percentage of samples
 #' in which a TSS cluster must be expressed to be considered valid.
 #' Default is 0, indicating we will not remove TSS clusters based on
@@ -33,16 +36,16 @@
 #' @importFrom data.table  .SD := data.table rbindlist set setDT
 #'
 SetMatrixNameSame <- function(Quantified_TSS_list,
-                              join_type="inner",
+                              filtering_level="cell",
                               exp_level = 0,
                               remove_oneTSS_gene = TRUE
                               ){
 
-  if(sum(!(join_type=="inner"|join_type=="other"))>0){
-    stop("Enter a correct joint_type." )
+  if(sum(!(filtering_level=="cell"|filtering_level=="sample"))>0){
+    stop("Enter a correct filtering_level!" )
   }
 
-  if(join_type=="inner"){
+  if(filtering_level=="cell"){
     TSS_counts_list <- list()
     col_meta_list <- list()
     for (i in 1:length(Quantified_TSS_list)) {
@@ -61,17 +64,6 @@ SetMatrixNameSame <- function(Quantified_TSS_list,
       print(paste0("In sample ", names(TSS_counts_list)[i]," ",nrow(temp) - length(temp_idx), " TSS clusters were removed for low expression."))
       TSS_counts_list[[i]] <- temp[temp_idx]
     }
-
-    ## step 2: merge TSS clusters
-    # if(sum(!(join_type=="inner"|join_type=="outer"))>0){
-    #   stop("Enter a correct joint_type." )
-    # }
-
-    # if(join_type == "inner"){
-    #   allnames <- data.table(TSS_clusters=Reduce(intersect,lapply(TSS_counts_list, function(y){y$TSS_clusters})))
-    # }else{
-    #   allnames <- data.table(TSS_clusters=unique(unlist(lapply(TSS_counts_list, function(y){y$TSS_clusters}))))
-    # }
 
     allnames <- data.table(TSS_clusters=Reduce(intersect,lapply(TSS_counts_list, function(y){y$TSS_clusters})))
 
