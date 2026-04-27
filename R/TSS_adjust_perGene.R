@@ -5,10 +5,10 @@ TSS_adjust_perGene <- function(this_gene_region,
                                this_gene_xn,
                                this_sample_leart_dist,
                                gene_extension = 500){
-
+  
   strand <- as.character(strand(this_gene_region))
   temp_result <- as.data.frame(this_gene_clusters)
-
+  
   # extend the first exon, in case there are intergenetic TSSs
   exon_list <- data.frame(this_gene_xn)
   if(strand=="+"){
@@ -17,13 +17,20 @@ TSS_adjust_perGene <- function(this_gene_region,
     exon_list[nrow(exon_list),]$end <- exon_list[nrow(exon_list),]$end+gene_extension
   }
   exon_list$width <- exon_list$end-exon_list$start+1
-
-
+  
+  
   #### step 1: decide if the start site of the cluster is on the exon; IF not remove the cluster
-
+  ## Bug fix: collect rows to remove first, then subset once at the end.
+  ## The previous in-loop removal caused 1:nrow(temp_result) to index past
+  ## the (shrinking) data frame, returning NA rows that crashed check_loc_exons
+  ## with "missing value where TRUE/FALSE needed". The error was silently
+  ## swallowed by the outer tryCatch in adjustTSS, dropping the gene's
+  ## entire output.
+  
+  to_remove <- c()
   for(ii in 1:nrow(temp_result)){
     temp <- temp_result[ii,]
-
+    
     if(strand == "+"){
       start_xn_info <- check_loc_exons(exons = exon_list,
                                        loc = temp$start)
@@ -31,14 +38,24 @@ TSS_adjust_perGene <- function(this_gene_region,
       start_xn_info <- check_loc_exons(exons = exon_list,
                                        loc = temp$end)
     }
-
+    
     if(!start_xn_info$in_exon){
-      temp_result <- temp_result[-ii,]
+      to_remove <- c(to_remove, ii)
     }
-
+    
   }
-
-
+  if(length(to_remove) > 0){
+    temp_result <- temp_result[-to_remove, ]
+  }
+  
+  ## If every cluster was filtered out, exit early — there is nothing to
+  ## adjust for this gene. Returning NULL is consistent with how adjustTSS
+  ## handles per-gene results (lengths(adj_TSS_clusters) > 0 filter).
+  if(nrow(temp_result) == 0){
+    return(NULL)
+  }
+  
+  
   #### step 2: move the start site of the genomic regions along the exons
   if(strand == "+"){
     start_sites <- temp_result$start
@@ -46,8 +63,8 @@ TSS_adjust_perGene <- function(this_gene_region,
     start_sites <- temp_result$end
   }
   org_clusters_location <- temp_result
-
-
+  
+  
   for(ii in 1:length(start_sites)){
     # get the current location for tss candidates
     x <- start_sites[ii]
@@ -71,7 +88,7 @@ TSS_adjust_perGene <- function(this_gene_region,
           dist_to_adjust <- dist_to_adjust-min_exon_dist
         }
       }
-
+      
     }else{
       # initiate the distance to be adjusted
       dist_to_adjust <- this_sample_leart_dist
@@ -92,26 +109,26 @@ TSS_adjust_perGene <- function(this_gene_region,
           dist_to_adjust <- dist_to_adjust-min_exon_dist
         }
       }
-
+      
     }
-
+    
   }
-
+  
   #### step 3: reconstruct clusters
   if(strand == "+"){
     org_start_sites <- org_clusters_location$start
   }else{
     org_start_sites <- org_clusters_location$end
   }
-
+  
   dist_change <- org_start_sites - start_sites
-
+  
   out <- data.frame(seqnames = temp_result$seqnames[1],
                     tss5prime = start_sites,
                     width = temp_result$width,
                     strand = strand,
                     org_start  = temp_result$start,
                     org_end = temp_result$end)
-
+  
   return(out)
 }
