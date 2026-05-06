@@ -5,7 +5,7 @@ Shiwei Fu, Wei Vivian Li
 
 ## Introduction
 
-scTSS is a package that can leverage the 5’ single-cell RNA-seq data
+scTSS is a package in R that can leverage the 5’ single-cell RNA-seq data
 (both paired-end and single-end data) to study the transcription start
 site (TSS) at single-cell resolution. scTSS comprises of two main
 stages, TSS cluster prediction and quantification, and differential TSS
